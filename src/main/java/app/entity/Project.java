@@ -1,4 +1,4 @@
-package app.domain;
+package app.entity;
 
 import java.util.Date;
 
