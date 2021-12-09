@@ -9,19 +9,29 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
+import org.springframework.lang.NonNull;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+
 @Entity
 public class Project {
 	
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NonNull
 	private String projectName;
+	@NonNull
 	private String projectIdentifier;
 	private String description;
+	@JsonFormat(pattern = "yyy-mm-dd")
 	private Date start_date;
+	@JsonFormat(pattern = "yyy-mm-dd")
 	private Date end_date;
-	
+	@JsonFormat(pattern = "yyy-mm-dd")
 	private Date created_At;
+	@JsonFormat(pattern = "yyy-mm-dd")
 	private Date updated_At;
 	
 	public Project() {}
