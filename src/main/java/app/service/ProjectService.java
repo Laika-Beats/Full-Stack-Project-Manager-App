@@ -13,6 +13,7 @@ public class ProjectService {
 	@Autowired
 	private ProjectRepository projectRepository;
 	
+	// SAVE/UPDATE
 	public Project saveOrUpdateProject(Project project) {
 		try {
 			project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
@@ -23,6 +24,7 @@ public class ProjectService {
 		}
 	}
 	
+	// GET (BY ID)
 	public Project findProjectByIdentifier (String projectId) {
 		
 		Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
@@ -33,7 +35,17 @@ public class ProjectService {
 		return project;
 	}
 	
+	// GET ALL
 	public Iterable<Project> findAllProjects(){
 		return projectRepository.findAll();
+	}
+	
+	// DELETE
+	public void deleteProjectByIdentifier(String projectId) {
+		Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
+		if (project == null) {
+			throw new ProjectIdException("Cannot delete project with ID '" + projectId + "'.");
+		}
+		projectRepository.delete(project);
 	}
 }
