@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProject } from "../../actions/projectActions";
+import { Link } from "react-router-dom";
 
 class AddProject extends Component {
   constructor() {
@@ -21,12 +22,25 @@ class AddProject extends Component {
   }
 
   // life cycle hooks
-  componentDidUpdate(prevProps) {
-    if (prevProps.errors !== this.props.errors) {
-      console.log(this.props.errors.response.data);
-      this.setState({ errors: this.props.errors.response.data });
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors.message !== "history is undefined") {
+      console.log(nextProps);
+      this.setState({ errors: nextProps.errors.response.data });
     }
+    console.log(nextProps);
   }
+  // componentDidUpdate(prevProps, nextProps) {
+  //   console.log(nextProps);
+  //   console.log(this.props);
+  //   const setErrors = () =>
+  //     this.setState({ errors: this.props.errors.response.data });
+  //   if (nextProps.errors === this.props.errors) {
+  //     console.log(nextProps);
+  //   } else {
+  //     setErrors(nextProps);
+  //   }
+  // }
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
@@ -42,6 +56,14 @@ class AddProject extends Component {
       end_date: this.state.end_date,
     };
     this.props.createProject(newProject, this.props.history);
+    this.setState({
+      projectName: "",
+      projectIdentifier: "",
+      description: "",
+      start_date: "",
+      end_date: "",
+      errors: {},
+    });
   }
 
   render() {
@@ -109,10 +131,16 @@ class AddProject extends Component {
                     onChange={this.onChange}
                   />
                 </div>
+
                 <input
                   type="submit"
                   className="btn btn-primary btn-block mt-4"
                 />
+                <Link to="/">
+                  <button className="btn btn-primary btn-block mt-4">
+                    Back
+                  </button>
+                </Link>
               </form>
             </div>
           </div>
