@@ -76,6 +76,7 @@ class AddProject extends Component {
                     value={this.state.projectIdentifier}
                     onChange={this.onChange}
                   />
+                  <p>{errors.projectIdentifier}</p>
                 </div>
 
                 <div className="form-group">
@@ -86,6 +87,7 @@ class AddProject extends Component {
                     value={this.state.description}
                     onChange={this.onChange}
                   ></textarea>
+                  <p>{errors.description}</p>
                 </div>
                 <h6>Start Date</h6>
                 <div className="form-group">
