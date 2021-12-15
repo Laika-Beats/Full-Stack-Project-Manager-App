@@ -13,10 +13,19 @@ class AddProject extends Component {
       description: "",
       start_date: "",
       end_date: "",
+      errors: {},
     };
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  // life cycle hooks
+  componentDidUpdate(prevProps) {
+    if (prevProps.errors !== this.props.errors) {
+      console.log(this.props.errors.response.data);
+      this.setState({ errors: this.props.errors.response.data });
+    }
   }
 
   onChange(e) {
@@ -36,6 +45,7 @@ class AddProject extends Component {
   }
 
   render() {
+    const { errors } = this.state;
     return (
       <div className="project">
         <div className="container">
@@ -55,6 +65,7 @@ class AddProject extends Component {
                     value={this.state.projectName}
                     onChange={this.onChange}
                   />
+                  <p>{errors.projectName}</p>
                 </div>
                 <div className="form-group">
                   <input
@@ -96,7 +107,6 @@ class AddProject extends Component {
                     onChange={this.onChange}
                   />
                 </div>
-
                 <input
                   type="submit"
                   className="btn btn-primary btn-block mt-4"
@@ -112,6 +122,11 @@ class AddProject extends Component {
 
 AddProject.propTypes = {
   createProject: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
 };
 
-export default connect(null, { createProject })(AddProject);
+const mapStateToProps = (state) => ({
+  errors: state.errors,
+});
+
+export default connect(mapStateToProps, { createProject })(AddProject);
